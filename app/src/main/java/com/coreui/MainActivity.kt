@@ -111,9 +111,9 @@ private fun CameraScreen(executor: Executor) {
                     color = Accent, style = MaterialTheme.typography.titleLarge)
             }
             Slider(value = zoom, onValueChange = { value ->
-                zoom = value
-                camera?.cameraControl?.setZoomRatio(value.coerceIn(1f, maxZoom))
-            }, valueRange = 1f..15f, steps = 139, enabled = camera != null)
+                zoom = value.coerceIn(1f, maxZoom)
+                camera?.cameraControl?.setZoomRatio(zoom)
+            }, valueRange = 1f..maxZoom.coerceAtLeast(1.01f), steps = 139, enabled = camera != null && maxZoom > 1f)
             Text(
                 if (maxZoom < 15f) "Максимум этой камеры: ${String.format(Locale.US, "%.1f", maxZoom)}x"
                 else "Цифровой зум: 1–15x",
